@@ -9,6 +9,9 @@
 /continue-config.yaml
 /continue-config.yaml.tmp
 
+# Blog publishing assets kept outside the repository
+/blog-draft/
+
 # Logs and local state
 *.log
 *.pid
