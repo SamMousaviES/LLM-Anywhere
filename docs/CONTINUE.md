@@ -1,6 +1,6 @@
-# Use Portable AI Models with Continue
+# Use LLM Anywhere with Continue
 
-Portable AI Models exposes local GGUF models through a local API. The launchers
+LLM Anywhere exposes local GGUF models through a local API. The launchers
 also generate a Continue YAML configuration containing one entry per model.
 
 ## 1. Start the server
@@ -58,7 +58,7 @@ your model IDs confirms the API is reachable.
 - **Model is missing:** Restart the launcher after changing `models/`, merge the
   regenerated config, and reload VS Code.
 - **Model fails to load:** Use a smaller model or quantization, shorten the
-  context, or force CPU mode if the GPU backend is the problem.
+  context, or set `PORTABLELLM_BACKEND=cpu` if the GPU backend is the problem.
 - **First response is slow:** A model must be loaded from disk after startup or
   after switching models.
 - **Agent mode is unreliable:** Small local models can be good at focused chat

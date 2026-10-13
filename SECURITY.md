@@ -8,7 +8,7 @@ API keys, or other sensitive data in a public issue.
 
 ## Local server boundary
 
-Portable AI Models starts an unauthenticated local inference server. The
+LLM Anywhere starts an unauthenticated local inference server. The
 provided launchers bind it to `127.0.0.1`, which limits access to applications
 on the same computer. Exposing the server on a LAN or the public internet is
 outside this project's secure default and requires authentication, TLS, and

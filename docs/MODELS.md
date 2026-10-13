@@ -1,6 +1,6 @@
 # Choosing and downloading models
 
-Portable AI Models does not redistribute model weights. You choose the model,
+LLM Anywhere does not redistribute model weights. You choose the model,
 download its GGUF file, and place it in the repository's `models/` directory.
 The launchers discover all top-level `.gguf` files when they start.
 
@@ -41,6 +41,14 @@ These are deliberately broad planning ranges for 4-bit models:
 Runtime memory is higher than the file size because the context/KV cache and
 working buffers also consume RAM or VRAM. Longer context sizes require more
 memory. Start with `Q4_K_M` and a 4096-token context if unsure.
+
+In automatic mode, `llama.cpp` estimates available GPU memory and leaves layers
+that do not fit on the GPU in system RAM for CPU processing. This is slower
+than fitting the whole model on the GPU. Windows also keeps its KV cache in
+RAM by default.
+On Apple Silicon, CPU and GPU share the same physical memory. Memory fitting
+cannot make a model run if the machine lacks enough total RAM; in that case,
+choose a smaller model, a smaller quantization, or a shorter context.
 
 ## Download with a browser
 

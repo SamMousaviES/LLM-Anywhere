@@ -23,7 +23,7 @@ fi
 
 TEMP_FILE="${OUTPUT_FILE}.tmp"
 {
-  echo 'name: Portable AI Models'
+  echo 'name: LLM Anywhere'
   echo 'version: 1.0.0'
   echo 'schema: v1'
   echo

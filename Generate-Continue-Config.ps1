@@ -23,7 +23,7 @@ function ConvertTo-YamlQuotedString([string]$Value) {
 }
 
 $lines = [System.Collections.Generic.List[string]]::new()
-$lines.Add("name: Portable AI Models")
+$lines.Add("name: LLM Anywhere")
 $lines.Add("version: 1.0.0")
 $lines.Add("schema: v1")
 $lines.Add("")

@@ -12,7 +12,7 @@ mkdir -p "$TMP_ROOT/models"
 bash "$ROOT/Generate-Continue-Config.sh" \
   "$TMP_ROOT/models" "$TMP_ROOT/continue-config.yaml" 9090
 
-grep -Fq 'name: Portable AI Models' "$TMP_ROOT/continue-config.yaml"
+grep -Fq 'name: LLM Anywhere' "$TMP_ROOT/continue-config.yaml"
 grep -Fq 'provider: llama.cpp' "$TMP_ROOT/continue-config.yaml"
 grep -Fq 'model: "alpha"' "$TMP_ROOT/continue-config.yaml"
 grep -Fq 'model: "model \"beta\""' "$TMP_ROOT/continue-config.yaml"

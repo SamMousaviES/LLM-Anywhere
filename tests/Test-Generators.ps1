@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $PSScriptRoot
-$tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("portable-ai-models-test-" + [guid]::NewGuid())
+$tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("llm-anywhere-test-" + [guid]::NewGuid())
 $models = Join-Path $tempRoot "models"
 $output = Join-Path $tempRoot "continue-config.yaml"
 
@@ -15,7 +15,7 @@ try {
 
     $config = Get-Content -LiteralPath $output -Raw
     $checks = @(
-        "name: Portable AI Models",
+        "name: LLM Anywhere",
         "provider: llama.cpp",
         "model: `"alpha`"",
         'model: "model beta"',

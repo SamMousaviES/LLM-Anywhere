@@ -34,7 +34,7 @@ install_asset() {
 
 echo "Resolving the current stable llama.cpp build ..."
 STABLE_JSON="$(curl --fail --silent --show-error --location \
-  -H 'Accept: application/vnd.github+json' -H 'User-Agent: Portable-AI-Models-Setup' \
+  -H 'Accept: application/vnd.github+json' -H 'User-Agent: LLM-Anywhere-Setup' \
   "$STABLE_URL")"
 POINTER_URL="$(printf '%s' "$STABLE_JSON" | tr ',' '\n' | sed -n \
   's/.*"browser_download_url"[[:space:]]*:[[:space:]]*"\([^"]*nightly-tag.txt\)".*/\1/p' | head -n 1)"

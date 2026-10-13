@@ -1,12 +1,19 @@
-# Portable AI Models
+# LLM Anywhere
 
-[![CI](https://github.com/SamMousaviES/Portable_AI_Models/actions/workflows/ci.yml/badge.svg)](https://github.com/SamMousaviES/Portable_AI_Models/actions/workflows/ci.yml)
+[![CI](https://github.com/SamMousaviES/LLM-Anywhere/actions/workflows/ci.yml/badge.svg)](https://github.com/SamMousaviES/LLM-Anywhere/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![llama.cpp](https://img.shields.io/badge/runtime-llama.cpp-orange)](https://github.com/ggml-org/llama.cpp)
 
-Run local GGUF language models on Windows, macOS, or Ubuntu with a private,
-OpenAI-compatible API and a browser interface. Portable AI Models wraps
-[`llama.cpp`](https://github.com/ggml-org/llama.cpp) with small launchers that:
+Your models. Your machine. Anywhere.
+
+LLM Anywhere is a lightweight toolkit for running GGUF language models locally
+on Windows, macOS, and Ubuntu. Powered by
+[`llama.cpp`](https://github.com/ggml-org/llama.cpp), it provides hardware
+acceleration, a browser interface, an OpenAI-compatible API, and Continue
+integration for private AI-assisted development. You download model weights
+separately, choosing models that fit your hardware and licensing needs.
+
+The launchers:
 
 - select a native runtime for the current operating system;
 - use Vulkan or Metal acceleration when available and fall back to CPU;
@@ -23,8 +30,8 @@ license fit their needs.
 ### Windows 10/11 (x64)
 
 ```powershell
-git clone https://github.com/SamMousaviES/Portable_AI_Models.git
-cd Portable_AI_Models
+git clone https://github.com/SamMousaviES/LLM-Anywhere.git
+cd LLM-Anywhere
 powershell -ExecutionPolicy Bypass -File .\Setup-Windows.ps1
 ```
 
@@ -37,8 +44,8 @@ Download at least one GGUF model into `models\`, then run:
 ### macOS or Ubuntu
 
 ```bash
-git clone https://github.com/SamMousaviES/Portable_AI_Models.git
-cd Portable_AI_Models
+git clone https://github.com/SamMousaviES/LLM-Anywhere.git
+cd LLM-Anywhere
 bash Setup-Mac-or-Ubuntu.sh
 ```
 
@@ -96,6 +103,14 @@ set PORTABLELLM_CONTEXT_SIZE=8192
 Start-Windows.bat
 ```
 
+With `auto`, the GPU builds use `llama.cpp` memory fitting to choose how much
+of a model to put on the GPU. Remaining layers run from system RAM on the CPU.
+On Windows, the KV cache also stays in RAM. Apple Silicon uses shared memory
+for its CPU and GPU, so it has no separate VRAM pool to overflow into RAM.
+The specified context size stays fixed; a model still needs enough total RAM
+and may fail if even partial offload does not fit. Set `PORTABLELLM_BACKEND=cpu`
+to run entirely on the CPU, or reduce the context size for a large model.
+
 Only one model is kept in memory at a time. Switching models can therefore make
 the first request slower while the new weights load.
 
@@ -110,10 +125,10 @@ those entries to VS Code.
 | Platform | Acceleration | CPU fallback |
 | --- | --- | --- |
 | Windows x64 | Vulkan | Yes |
-| macOS Apple Silicon | Metal | Native runtime |
-| macOS Intel | Metal/CPU | Native runtime |
+| macOS Apple Silicon | Metal | Yes |
+| macOS Intel | Metal/CPU | Yes |
 | Ubuntu x64 | Vulkan | Yes |
-| Ubuntu ARM64 | Platform default | Native runtime |
+| Ubuntu ARM64 | CPU | Already CPU based |
 
 The setup scripts obtain official prebuilt `llama.cpp` artifacts. Other Linux
 distributions may work but are not currently covered by the launchers.

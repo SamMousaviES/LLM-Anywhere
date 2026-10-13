@@ -8,14 +8,14 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 if (-not [Environment]::Is64BitOperatingSystem) {
-    throw "Portable AI Models currently requires 64-bit Windows."
+    throw "LLM Anywhere currently requires 64-bit Windows."
 }
 
 $root = $PSScriptRoot
 $binRoot = Join-Path $root "bin"
 $releaseApi = "https://api.github.com/repos/ggml-org/llama.cpp/releases/latest"
-$headers = @{ "User-Agent" = "Portable-AI-Models-Setup" }
-$tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("portable-ai-models-" + [guid]::NewGuid())
+$headers = @{ "User-Agent" = "LLM-Anywhere-Setup" }
+$tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("llm-anywhere-" + [guid]::NewGuid())
 
 function Install-LlamaAsset {
     param(

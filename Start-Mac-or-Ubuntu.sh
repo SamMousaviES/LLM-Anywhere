@@ -10,11 +10,11 @@ bash "$ROOT/Generate-Continue-Config.sh" "$MODELS" "$ROOT/continue-config.yaml" 
 case "$(uname -s)-$(uname -m)" in
   Darwin-arm64)
     RUNNER="$ROOT/bin/mac-arm64/llama-server"
-    ARGS=(-ngl auto)
+    ARGS=(--fit on)
     ;;
   Darwin-x86_64)
     RUNNER="$ROOT/bin/mac-x64/llama-server"
-    ARGS=(-ngl auto)
+    ARGS=(--fit on)
     ;;
   Linux-x86_64)
     GPU="$ROOT/bin/ubuntu-vulkan-x64/llama-server"
@@ -23,7 +23,7 @@ case "$(uname -s)-$(uname -m)" in
       "$GPU" --list-devices 2>&1 | grep -Eq 'Vulkan[0-9]'; then
       echo "Vulkan GPU found"
       RUNNER="$GPU"
-      ARGS=(-ngl auto)
+      ARGS=(--fit on)
     else
       echo "Using CPU"
       RUNNER="$CPU"
@@ -39,6 +39,9 @@ case "$(uname -s)-$(uname -m)" in
     exit 1
     ;;
 esac
+if [[ "$PLLM_BACKEND" == "cpu" ]]; then
+  ARGS=(-ngl 0)
+fi
 [[ -x "$RUNNER" ]] || {
   echo "llama.cpp runtime not found: $RUNNER" >&2
   echo "Run: bash Setup-Mac-or-Ubuntu.sh" >&2

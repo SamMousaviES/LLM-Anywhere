@@ -31,7 +31,7 @@ if not exist "%GPU%" goto CPU
 if errorlevel 1 goto CPU
 echo Vulkan GPU found. Multi-model mode. Open http://127.0.0.1:%PLLM_PORT%
 echo Continue setup: see %~dp0docs\CONTINUE.md
-"%GPU%" --models-dir "%MODELS%" --models-max 1 --models-autoload -c "%PLLM_CONTEXT%" -ngl 20 --no-kv-offload --host 127.0.0.1 --port "%PLLM_PORT%"
+"%GPU%" --models-dir "%MODELS%" --models-max 1 --models-autoload -c "%PLLM_CONTEXT%" --fit on --no-kv-offload --host 127.0.0.1 --port "%PLLM_PORT%"
 if not errorlevel 1 exit /b 0
 :CPU
 if not exist "%CPU%" (
