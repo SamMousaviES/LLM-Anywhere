@@ -1,0 +1,16 @@
+# Downloaded runtimes and model weights
+/bin/
+/models/*
+!/models/.gitkeep
+
+# Generated configuration
+/continue-config.yaml
+/continue-config.yaml.tmp
+
+# Logs and local state
+*.log
+*.pid
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

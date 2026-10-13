@@ -1,0 +1,145 @@
+# Portable AI Models
+
+[![CI](https://github.com/SamMousaviES/Portable_AI_Models/actions/workflows/ci.yml/badge.svg)](https://github.com/SamMousaviES/Portable_AI_Models/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![llama.cpp](https://img.shields.io/badge/runtime-llama.cpp-orange)](https://github.com/ggml-org/llama.cpp)
+
+Run local GGUF language models on Windows, macOS, or Ubuntu with a private,
+OpenAI-compatible API and a browser interface. Portable AI Models wraps
+[`llama.cpp`](https://github.com/ggml-org/llama.cpp) with small launchers that:
+
+- select a native runtime for the current operating system;
+- use Vulkan or Metal acceleration when available and fall back to CPU;
+- discover every `.gguf` file in `models/`;
+- expose the service only on `127.0.0.1` by default; and
+- generate a [Continue](https://www.continue.dev/) configuration for VS Code.
+
+Model weights and runtime binaries are intentionally not committed. This keeps
+the repository small and lets users choose models whose size, quality, and
+license fit their needs.
+
+## Quick start
+
+### Windows 10/11 (x64)
+
+```powershell
+git clone https://github.com/SamMousaviES/Portable_AI_Models.git
+cd Portable_AI_Models
+powershell -ExecutionPolicy Bypass -File .\Setup-Windows.ps1
+```
+
+Download at least one GGUF model into `models\`, then run:
+
+```powershell
+.\Start-Windows.bat
+```
+
+### macOS or Ubuntu
+
+```bash
+git clone https://github.com/SamMousaviES/Portable_AI_Models.git
+cd Portable_AI_Models
+bash Setup-Mac-or-Ubuntu.sh
+```
+
+Download at least one GGUF model into `models/`, then run:
+
+```bash
+bash Start-Mac-or-Ubuntu.sh
+```
+
+Open <http://127.0.0.1:8080> for the built-in interface. The API is available
+at `http://127.0.0.1:8080/v1`.
+
+## Download a model
+
+GGUF is the model format used by `llama.cpp`. A practical starting point is a
+small instruct model with a 4-bit quantization. For example, after installing
+the [Hugging Face CLI](https://huggingface.co/docs/huggingface_hub/guides/cli):
+
+```bash
+# Very small starter model
+hf download ggml-org/Qwen3.5-0.8B-GGUF Qwen3.5-0.8B-Q4_0.gguf --local-dir models
+
+# More capable 4B model (requires more memory)
+hf download ggml-org/gemma-3-4b-it-GGUF gemma-3-4b-it-Q4_K_M.gguf --local-dir models
+```
+
+You can also download a `.gguf` file in a browser and place it directly in the
+`models` directory. Always read the model card and comply with the model's own
+license and usage terms.
+
+See [Choosing and downloading models](docs/MODELS.md) for sizing, quantization,
+download options, and model-safety guidance.
+
+## Configuration
+
+The launchers support these environment variables:
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `PORTABLELLM_PORT` | `8080` | Local HTTP port |
+| `PORTABLELLM_CONTEXT_SIZE` | `8192` on Windows; `4096` on macOS/Linux | Maximum context tokens |
+| `PORTABLELLM_BACKEND` | `auto` | `auto` or `cpu`; use `cpu` to disable GPU probing |
+
+Example:
+
+```bash
+PORTABLELLM_PORT=9090 PORTABLELLM_CONTEXT_SIZE=8192 bash Start-Mac-or-Ubuntu.sh
+```
+
+Windows Command Prompt equivalent:
+
+```bat
+set PORTABLELLM_PORT=9090
+set PORTABLELLM_CONTEXT_SIZE=8192
+Start-Windows.bat
+```
+
+Only one model is kept in memory at a time. Switching models can therefore make
+the first request slower while the new weights load.
+
+## Continue for VS Code
+
+Each launch regenerates `continue-config.yaml` from the models currently in the
+`models/` directory. Follow [the Continue setup guide](docs/CONTINUE.md) to add
+those entries to VS Code.
+
+## Supported platforms
+
+| Platform | Acceleration | CPU fallback |
+| --- | --- | --- |
+| Windows x64 | Vulkan | Yes |
+| macOS Apple Silicon | Metal | Native runtime |
+| macOS Intel | Metal/CPU | Native runtime |
+| Ubuntu x64 | Vulkan | Yes |
+| Ubuntu ARM64 | Platform default | Native runtime |
+
+The setup scripts obtain official prebuilt `llama.cpp` artifacts. Other Linux
+distributions may work but are not currently covered by the launchers.
+
+## Security and privacy
+
+Prompts and model inference stay on the local machine. The server has no API
+authentication, so the launchers deliberately bind to loopback only. Do not
+change the host to `0.0.0.0` or expose the port to the internet without adding
+authentication and appropriate network controls. See [SECURITY.md](SECURITY.md).
+
+## Project layout
+
+```text
+.
+|-- models/                       # Your GGUF files (ignored by Git)
+|-- docs/
+|   |-- CONTINUE.md               # Continue/VS Code integration
+|   `-- MODELS.md                 # Model selection and downloads
+|-- Generate-Continue-Config.*    # Generated model entries
+|-- Setup-*                       # Download the native llama.cpp runtime
+`-- Start-*                       # Start the local server
+```
+
+## License
+
+The launcher and configuration code in this repository is available under the
+[MIT License](LICENSE). `llama.cpp` and downloaded models are separate works
+with their own licenses.

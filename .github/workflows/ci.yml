@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke-tests:
+    name: Script smoke tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check Bash syntax
+        run: bash -n ./*.sh tests/*.sh
+
+      - name: Test Bash generator
+        run: bash tests/test-generators.sh
+
+      - name: Test PowerShell generator
+        shell: pwsh
+        run: ./tests/Test-Generators.ps1

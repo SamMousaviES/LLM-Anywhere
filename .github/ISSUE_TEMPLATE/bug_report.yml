@@ -1,0 +1,48 @@
+name: Bug report
+description: Report a reproducible launcher or configuration problem
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Do not attach private prompts, model weights, API keys, or other secrets.
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - Windows x64
+        - macOS Apple Silicon
+        - macOS Intel
+        - Ubuntu x64
+        - Ubuntu ARM64
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Include the command, expected result, and actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      render: shell
+  - type: input
+    id: model
+    attributes:
+      label: Model name and quantization
+      placeholder: gemma-3-4b-it-Q4_K_M.gguf
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I confirmed the model is a GGUF file in the top level of `models/`.
+          required: true
+        - label: I removed secrets and private data from this report.
+          required: true
