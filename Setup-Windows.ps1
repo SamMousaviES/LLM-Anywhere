@@ -82,7 +82,7 @@ try {
     New-Item -ItemType Directory -Force -Path (Join-Path $root "models") | Out-Null
     Write-Host ""
     Write-Host "Setup complete (llama.cpp $buildTag)."
-    Write-Host "Next: add a GGUF file to the models folder, then run Start-Windows.bat."
+    Write-Host "Next: run Start-Windows.bat to try the bundled demo model."
 } finally {
     if (Test-Path -LiteralPath $tempRoot) {
         Remove-Item -LiteralPath $tempRoot -Recurse -Force

@@ -1,8 +1,10 @@
 # Choosing and downloading models
 
-LLM Anywhere does not redistribute model weights. You choose the model,
-download its GGUF file, and place it in the repository's `models/` directory.
-The launchers discover all top-level `.gguf` files when they start.
+LLM Anywhere includes a tiny [SmolLM2 demo model](../models/README.md).
+It is useful for trying the interface after setup, but its responses are
+limited. For better results, choose another model, download its GGUF file,
+and place it in the repository's `models/` directory. The launchers discover
+all top-level `.gguf` files when they start.
 
 ## What GGUF and quantization mean
 
@@ -32,6 +34,7 @@ These are deliberately broad planning ranges for 4-bit models:
 
 | Model class | Approximate model file | Practical expectation |
 | --- | --- | --- |
+| 0.1B | About 0.1 GB | Bundled demo; basic interaction only |
 | 0.5B-1.5B | 0.5-1.5 GB | Fast and lightweight; limited reasoning |
 | 3B-4B | 2-4 GB | Good portable balance for chat and focused edits |
 | 7B-9B | 4-7 GB | Better quality; needs more RAM/VRAM |
@@ -93,4 +96,6 @@ The first request after a switch is therefore slower.
 A GGUF conversion does not replace the original model's license. Review both
 the GGUF repository and its linked upstream model. Treat model files as
 third-party downloads, prefer established publishers, and validate checksums
-when the publisher provides them. Do not commit weights to this repository.
+when the publisher provides them. The included demo's source, checksum, and
+Apache 2.0 license are recorded in [its README](../models/README.md). Other
+weights should remain local and outside Git.

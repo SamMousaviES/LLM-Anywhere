@@ -10,8 +10,8 @@ LLM Anywhere is a lightweight toolkit for running GGUF language models locally
 on Windows, macOS, and Ubuntu. Powered by
 [`llama.cpp`](https://github.com/ggml-org/llama.cpp), it provides hardware
 acceleration, a browser interface, an OpenAI-compatible API, and Continue
-integration for private AI-assisted development. You download model weights
-separately, choosing models that fit your hardware and licensing needs.
+integration for private AI-assisted development. A tiny demo model is bundled;
+you can add models that better fit your hardware and task.
 
 The launchers:
 
@@ -21,9 +21,8 @@ The launchers:
 - expose the service only on `127.0.0.1` by default; and
 - generate a [Continue](https://www.continue.dev/) configuration for VS Code.
 
-Model weights and runtime binaries are intentionally not committed. This keeps
-the repository small and lets users choose models whose size, quality, and
-license fit their needs.
+The repository includes one 92 MB demo model. Larger model weights and runtime
+binaries are excluded so you can choose what to download.
 
 ## Quick start
 
@@ -35,7 +34,7 @@ cd LLM-Anywhere
 powershell -ExecutionPolicy Bypass -File .\Setup-Windows.ps1
 ```
 
-Download at least one GGUF model into `models\`, then run:
+Then run the included demo model:
 
 ```powershell
 .\Start-Windows.bat
@@ -49,23 +48,25 @@ cd LLM-Anywhere
 bash Setup-Mac-or-Ubuntu.sh
 ```
 
-Download at least one GGUF model into `models/`, then run:
+Then run the included demo model:
 
 ```bash
 bash Start-Mac-or-Ubuntu.sh
 ```
 
 Open <http://127.0.0.1:8080> for the built-in interface. The API is available
-at `http://127.0.0.1:8080/v1`.
+at `http://127.0.0.1:8080/v1`. Select
+`SmolLM2-135M-Instruct.Q4_0` in the model picker.
 
 ## Download a model
 
-GGUF is the model format used by `llama.cpp`. A practical starting point is a
-small instruct model with a 4-bit quantization. For example, after installing
+The [bundled SmolLM2 model](models/README.md) is for a quick functional demo.
+Its 135 million parameters limit its reasoning and coding quality. For better
+results, add a larger GGUF instruct model. For example, after installing
 the [Hugging Face CLI](https://huggingface.co/docs/huggingface_hub/guides/cli):
 
 ```bash
-# Very small starter model
+# Lightweight upgrade from the bundled demo
 hf download ggml-org/Qwen3.5-0.8B-GGUF Qwen3.5-0.8B-Q4_0.gguf --local-dir models
 
 # More capable 4B model (requires more memory)
@@ -144,7 +145,7 @@ authentication and appropriate network controls. See [SECURITY.md](SECURITY.md).
 
 ```text
 .
-|-- models/                       # Your GGUF files (ignored by Git)
+|-- models/                       # Bundled demo; your added GGUF files are ignored
 |-- docs/
 |   |-- CONTINUE.md               # Continue/VS Code integration
 |   `-- MODELS.md                 # Model selection and downloads
@@ -156,5 +157,6 @@ authentication and appropriate network controls. See [SECURITY.md](SECURITY.md).
 ## License
 
 The launcher and configuration code in this repository is available under the
-[MIT License](LICENSE). `llama.cpp` and downloaded models are separate works
-with their own licenses.
+[MIT License](LICENSE). The bundled model is under
+[Apache 2.0](models/LICENSE-APACHE-2.0.txt). `llama.cpp` and other downloaded
+models are separate works with their own licenses.

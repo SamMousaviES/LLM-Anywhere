@@ -6,7 +6,7 @@ Describe the user-visible change and why it is needed.
 
 - [ ] Bash generator smoke test passes
 - [ ] PowerShell generator smoke test passes
-- [ ] No model weights or downloaded runtime binaries are included
+- [ ] No additional model weights or downloaded runtime binaries are included
 - [ ] Localhost-only binding is preserved
 
 ## Platforms tested

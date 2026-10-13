@@ -1,7 +1,9 @@
 # Downloaded runtimes and model weights
 /bin/
 /models/*
-!/models/.gitkeep
+!/models/SmolLM2-135M-Instruct.Q4_0.gguf
+!/models/README.md
+!/models/LICENSE-APACHE-2.0.txt
 
 # Generated configuration
 /continue-config.yaml

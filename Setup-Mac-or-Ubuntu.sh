@@ -65,4 +65,4 @@ esac
 mkdir -p "$ROOT/models"
 echo
 echo "Setup complete (llama.cpp $BUILD_TAG)."
-echo "Next: add a GGUF file to models/, then run bash Start-Mac-or-Ubuntu.sh."
+echo "Next: run bash Start-Mac-or-Ubuntu.sh to try the bundled demo model."
